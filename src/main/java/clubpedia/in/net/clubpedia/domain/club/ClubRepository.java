@@ -1,4 +1,4 @@
-package clubpedia.in.net.clubpedia.club;
+package clubpedia.in.net.clubpedia.domain.club;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

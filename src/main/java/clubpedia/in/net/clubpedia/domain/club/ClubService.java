@@ -1,4 +1,4 @@
-package clubpedia.in.net.clubpedia.club;
+package clubpedia.in.net.clubpedia.domain.club;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
