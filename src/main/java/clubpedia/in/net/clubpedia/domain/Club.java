@@ -1,4 +1,4 @@
-package clubpedia.in.net.clubpedia.domain.club;
+package clubpedia.in.net.clubpedia.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

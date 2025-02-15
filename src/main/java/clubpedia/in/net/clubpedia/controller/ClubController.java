@@ -1,5 +1,7 @@
-package clubpedia.in.net.clubpedia.domain.club;
+package clubpedia.in.net.clubpedia.controller;
 
+import clubpedia.in.net.clubpedia.domain.Club;
+import clubpedia.in.net.clubpedia.service.ClubService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

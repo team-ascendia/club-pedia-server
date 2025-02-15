@@ -16,7 +16,7 @@ spring:
       hibernate:
         format_sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
   sql:
     init:
@@ -30,4 +30,5 @@ springdoc:
     path: /docs
     disable-swagger-default-url: true
 
-
+kakao:
+  client-id: ${KAKAO_CLIENT_ID}
