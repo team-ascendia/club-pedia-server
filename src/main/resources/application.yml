@@ -32,3 +32,5 @@ springdoc:
 
 kakao:
   client-id: ${KAKAO_CLIENT_ID}
+jwt:
+  secret: ${JWT_SECRET}

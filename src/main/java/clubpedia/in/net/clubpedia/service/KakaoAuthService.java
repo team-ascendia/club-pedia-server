@@ -26,7 +26,7 @@ public class KakaoAuthService extends AuthService {
     @Autowired
     RestTemplate restTemplate;
 
-    @Value("${kakao.client-id}")  // 🔥 application.yml에서 값 불러오기
+    @Value("${kakao.client-id}")
     private String kakaoClientId;
 
     @Override

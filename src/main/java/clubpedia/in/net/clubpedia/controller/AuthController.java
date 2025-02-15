@@ -37,7 +37,8 @@ public class AuthController {
         Member member = authService.auth(request.getRedirectUri(), request.getCode());
 
         // accessToken 가져오기
-//        String accessToken = authService.getAccessToken(member);
+        String accessToken = authService.getAccessToken(member);
+        System.out.println(accessToken);
 
         // AuthResponse 반환
 //        AuthResponse response = new AuthResponse(member, accessToken);
