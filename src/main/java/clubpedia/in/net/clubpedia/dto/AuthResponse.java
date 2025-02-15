@@ -1,28 +1,32 @@
 package clubpedia.in.net.clubpedia.dto;
 
-
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
+import clubpedia.in.net.clubpedia.domain.Gender;
+import clubpedia.in.net.clubpedia.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
+import java.util.Date;
+
 @Getter
+@AllArgsConstructor
 public class AuthResponse {
-    @NotNull
     private String accessToken;
-    @NotNull
     private String name;
-    @NotNull
     private String phoneNumber;
-    @NotNull
-    private String birthday;
-    @NotNull
-    private String gender;
-    @NotNull
+    private Date birthday;
+    private Gender gender;
     private String email;
-    @NotNull
     private Boolean isSignup;
+
+    public static AuthResponse fromMember(Member member, String accessToken) {
+        return new AuthResponse(
+                accessToken,
+                member.getName(),
+                member.getPhoneNumber(),
+                member.getBirthday(),
+                member.getGender(),
+                member.getEmail(),
+                member.getIsSignup()
+        );
+    }
 }

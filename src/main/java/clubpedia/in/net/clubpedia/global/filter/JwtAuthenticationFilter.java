@@ -24,15 +24,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final MemberRepository memberRepository;
+    private final List<String> excludedEndpoints;
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil, MemberRepository memberRepository) {
+    public JwtAuthenticationFilter(JwtUtil jwtUtil, MemberRepository memberRepository, List<String> excludedEndpoints) {
         this.jwtUtil = jwtUtil;
         this.memberRepository = memberRepository;
+        this.excludedEndpoints = excludedEndpoints;
     }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
+        String requestURI = request.getRequestURI();
+
+        // SecurityConfig에서 `permitAll()`로 지정된 엔드포인트는 자동으로 필터를 건너뛴다.
+        if (excludedEndpoints.stream().anyMatch(endpoint -> requestURI.startsWith("/api" + endpoint.replace("/**", "")))) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         String token = resolveToken(request);
 
         if (token != null && jwtUtil.validateToken(token)) {

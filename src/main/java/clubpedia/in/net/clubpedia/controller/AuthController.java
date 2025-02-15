@@ -3,16 +3,21 @@ package clubpedia.in.net.clubpedia.controller;
 import clubpedia.in.net.clubpedia.domain.Member;
 import clubpedia.in.net.clubpedia.domain.SocialType;
 import clubpedia.in.net.clubpedia.dto.AuthRequest;
+import clubpedia.in.net.clubpedia.dto.AuthResponse;
 import clubpedia.in.net.clubpedia.factory.AuthServiceFactory;
 import clubpedia.in.net.clubpedia.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name="Auth - 인증")
 public class AuthController {
     @Autowired
     AuthServiceFactory authServiceFactory;
@@ -26,23 +31,21 @@ public class AuthController {
             }
     )
     @PostMapping("/social/{socialType}")
-    public Member authenticate(
-            @PathVariable("socialType") SocialType socialType,
+    @PermitAll
+    public ResponseEntity<AuthResponse> authenticate(
+            @PathVariable("socialType") String socialType,
             @RequestBody AuthRequest request) {
 
         // 적절한 AuthService 선택
-        AuthService authService = authServiceFactory.getAuthService(socialType);
+        AuthService authService = authServiceFactory.getAuthService(SocialType.fromString(socialType.toUpperCase()));
 
         // 로그인 or 회원가입 처리
         Member member = authService.auth(request.getRedirectUri(), request.getCode());
 
         // accessToken 가져오기
         String accessToken = authService.getAccessToken(member);
-        System.out.println(accessToken);
 
         // AuthResponse 반환
-//        AuthResponse response = new AuthResponse(member, accessToken);
-
-        return member;
+        return ResponseEntity.ok(AuthResponse.fromMember(member, accessToken));
     }
 }
