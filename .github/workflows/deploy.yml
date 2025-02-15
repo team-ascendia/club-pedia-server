@@ -1,0 +1,63 @@
+name: Deploy to AWS Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - develop
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎️ GitHub Repository Checkout
+        uses: actions/checkout@v3
+
+      - name: 🔧 Set Environment Variables
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            echo "ENV_NAME=develop" >> $GITHUB_ENV
+          elif [[ "${{ github.ref }}" == "refs/heads/production" ]]; then
+            echo "ENV_NAME=production" >> $GITHUB_ENV
+          fi
+
+      - name: 🐳 Login to DockerHub
+        run: |
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: 🏗️ Build and Push Docker Image
+        run: |
+          docker build -t clubpedia/clubpedia-${{ env.ENV_NAME }} .
+          docker push clubpedia/clubpedia-${{ env.ENV_NAME }}
+
+      - name: 📝 Generate Dockerrun.aws.json
+        run: |
+          echo '{
+            "AWSEBDockerrunVersion": "1",
+            "Image": {
+              "Name": "clubpedia/clubpedia-${{ env.ENV_NAME }}",
+              "Update": "true"
+            },
+            "Ports": [
+              {
+                "ContainerPort": "8080"
+              }
+            ]
+          }' > Dockerrun.aws.json
+
+      - name: 🚀 Deploy to AWS Elastic Beanstalk
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set region ${{ secrets.AWS_REGION }}
+
+          aws elasticbeanstalk create-application-version \
+            --application-name clubpedia \
+            --version-label "deploy-${{ github.sha }}" \
+            --source-bundle S3Bucket="elasticbeanstalk-${{ secrets.AWS_REGION }}-your-bucket",S3Key="clubpedia-${{ env.ENV_NAME }}/deploy-${{ github.sha }}.zip"
+
+          aws elasticbeanstalk update-environment \
+            --application-name clubpedia \
+            --environment-name clubpedia-${{ env.ENV_NAME }} \
+            --version-label "deploy-${{ github.sha }}"
