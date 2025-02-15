@@ -74,4 +74,20 @@ public class Member {
 
     @Column(name = "social_id")
     private String socialId;
+
+    public void activateMember(String name, String phoneNumber, Date birthday, String email, Gender gender, Boolean isOver14Agreed, Boolean isServiceTermAgreed, Boolean isPrivacyPolicyAgreed, Boolean isLocationTermAgreed, Boolean isMarketingAgreed) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.birthday = birthday;
+        this.email = email;
+        this.gender = gender;
+        this.isOver14Agreed = isOver14Agreed;
+        this.isServiceTermAgreed = isServiceTermAgreed;
+        this.isPrivacyPolicyAgreed = isPrivacyPolicyAgreed;
+        this.isLocationTermAgreed = isLocationTermAgreed;
+        this.isMarketingAgreed = isMarketingAgreed;
+        if (isOver14Agreed && isServiceTermAgreed && isPrivacyPolicyAgreed && isLocationTermAgreed) {
+            this.isSignup = true;
+        }
+    }
 }

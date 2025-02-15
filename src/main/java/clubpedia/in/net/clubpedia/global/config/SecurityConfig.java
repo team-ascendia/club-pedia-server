@@ -29,7 +29,8 @@ public class SecurityConfig {
                 "/v3/api-docs/**",
                 "/swagger-ui/**",
                 "/api-docs",
-                "/auth/social/**"
+                "/auth/social/**",
+                "/error"
         );
         http
                 .csrf(csrf -> csrf.disable())
@@ -39,7 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(excludedEndpoints.toArray(new String[0])).permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, memberRepository, excludedEndpoints), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAfter(new JwtAuthenticationFilter(jwtUtil, memberRepository, excludedEndpoints), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
