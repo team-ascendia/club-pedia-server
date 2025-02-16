@@ -55,9 +55,9 @@ jobs:
           aws elasticbeanstalk create-application-version \
             --application-name clubpedia \
             --version-label "deploy-${{ github.sha }}" \
-            --source-bundle S3Bucket="elasticbeanstalk-${{ secrets.AWS_REGION }}-clubpedia",S3Key="clubpedia-${{ env.ENV_NAME }}/deploy-${{ github.sha }}.zip"
+            --source-bundle S3Bucket="elasticbeanstalk-${{ secrets.AWS_REGION }}-655263459009",S3Key="clubpedia-${{ env.ENV_NAME }}/deploy-${{ github.sha }}.zip"
 
-          aws elasticbeanstalk update-environment \
+          aws elasticbeanstalk update-environment \ 
             --application-name clubpedia \
             --environment-name clubpedia-${{ env.ENV_NAME }} \
             --version-label "deploy-${{ github.sha }}"
