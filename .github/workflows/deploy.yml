@@ -1,4 +1,4 @@
-name: Deploy to AWS Elastic Beanstalk
+name: 🚀 Deploy to AWS Elastic Beanstalk (Docker)
 
 on:
   push:
@@ -47,17 +47,14 @@ jobs:
           }' > Dockerrun.aws.json
 
       - name: 🚀 Deploy to AWS Elastic Beanstalk
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set region ${{ secrets.AWS_REGION }}
-
-          aws elasticbeanstalk create-application-version \
-            --application-name clubpedia \
-            --version-label "deploy-${{ github.sha }}" \
-            --source-bundle S3Bucket="elasticbeanstalk-${{ secrets.AWS_REGION }}-655263459009",S3Key="clubpedia-${{ env.ENV_NAME }}/deploy-${{ github.sha }}.zip"
-
-          aws elasticbeanstalk update-environment \ 
-            --application-name clubpedia \
-            --environment-name clubpedia-${{ env.ENV_NAME }} \
-            --version-label "deploy-${{ github.sha }}"
+        uses: einaregilsson/beanstalk-deploy@v14
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: clubpedia
+          environment_name: clubpedia-${{ env.ENV_NAME }}
+          version_label: ${{ github.sha }}
+          version_description: ${{ github.event.head_commit.message }}
+          region: ap-northeast-2
+          deployment_package: Dockerrun.aws.json
+          use_existing_version_if_available: true
