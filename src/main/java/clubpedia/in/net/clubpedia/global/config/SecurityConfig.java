@@ -30,7 +30,8 @@ public class SecurityConfig {
                 "/swagger-ui/**",
                 "/api-docs",
                 "/auth/social/**",
-                "/error"
+                "/error",
+                "/health"
         );
         http
                 .csrf(csrf -> csrf.disable())
