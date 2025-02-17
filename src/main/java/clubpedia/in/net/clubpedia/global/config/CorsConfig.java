@@ -17,7 +17,9 @@ public class CorsConfig {
                                 "http://localhost:3000",
                                 "http://127.0.0.1:3000",
                                 "http://clubpedia.in.net",
-                                "https://clubpedia.in.net"
+                                "https://clubpedia.in.net",
+                                "http://dev.clubpedia.in.net",
+                                "https://dev.clubpedia.in.net"
                         ) // 인증서 없어도 허용
                         .allowedMethods("*") // 모든 HTTP 메소드 허용
                         .allowedHeaders("*") // 모든 헤더 허용
