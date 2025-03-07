@@ -36,8 +36,7 @@ jwt:
 management:
   endpoints:
     web:
-      exposure:
-        include: health
+      base-path: /
   endpoint:
     health:
       show-details: always
