@@ -38,6 +38,6 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .components(new Components().addSecuritySchemes("Bearer Token", apiKey))
                 .addSecurityItem(securityRequirement)
-                .addServersItem(new Server().url("/"));
+                .addServersItem(new Server().url("/api/"));
     }
 }

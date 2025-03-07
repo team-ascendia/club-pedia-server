@@ -1,51 +1,42 @@
 package clubpedia.in.net.clubpedia.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
+import java.util.HashSet;
+import java.util.Set;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 @Entity
 public class Club {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="id", updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name="name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name="entrnce_fee")
-    private String entranceFee;
+    @Column(name = "thumbnail_image_url")
+    private String thumbnailImageUrl;
 
-    @Column(name="instragram_id")
-    private String instagramId;
-
-    @Column(name="dress_code")
-    private String dressCode;
-
-    @Column(name="admission_start_age")
-    private Integer admissionStartAge;
-
-    @Column(name="admission_end_age")
-    private Integer admissionEndAge;
-
-    @Column(name="grade")
-    private Float grade;
-
-    @Column(name="latitude")
-    private Float latitude;
-
-    @Column(name="longitude")
-    private Float longitude;
-
-    @Column(name="address")
+    @Column(name = "address")
     private String address;
 
-    @Column(name="google_place_id")
-    private String googlePlaceId;
+    @Column(name = "price")
+    private String price;
+
+    @ManyToMany
+    @JoinTable(
+            name = "club_genre",
+            joinColumns = @JoinColumn(name = "club_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "region_id", nullable = false)
+    private Region region;
 }
