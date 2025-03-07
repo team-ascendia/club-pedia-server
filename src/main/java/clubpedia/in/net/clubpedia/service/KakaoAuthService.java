@@ -2,6 +2,8 @@ package clubpedia.in.net.clubpedia.service;
 
 import clubpedia.in.net.clubpedia.domain.Member;
 import clubpedia.in.net.clubpedia.domain.SocialType;
+import clubpedia.in.net.clubpedia.global.exception.CustomException;
+import clubpedia.in.net.clubpedia.global.exception.ExceptionType;
 import clubpedia.in.net.clubpedia.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import org.springframework.http.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -93,7 +96,11 @@ public class KakaoAuthService extends AuthService {
 
         // POST 요청 실행
         String requestUrl = "https://kauth.kakao.com/oauth/token";
-        return restTemplate.exchange(requestUrl, HttpMethod.POST, request, Map.class);
+        try {
+            return restTemplate.exchange(requestUrl, HttpMethod.POST, request, Map.class);
+        } catch (HttpClientErrorException e) {
+            throw new CustomException(ExceptionType.INVALID_CODE);
+        }
     }
 
     private ResponseEntity<Map> requestSocialUserInfo(String socialAccessToken) {

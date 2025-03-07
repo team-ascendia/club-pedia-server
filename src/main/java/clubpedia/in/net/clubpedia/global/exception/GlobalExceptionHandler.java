@@ -6,7 +6,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.sql.Array;
 import java.util.*;
 
 
@@ -59,6 +58,8 @@ public class GlobalExceptionHandler {
                 detailList.add(details.toString());
                 errorDetails.put("details", detailList);
             }
+        } else {
+            errorDetails.put("details", new ArrayList<>());
         }
 
         errorResponse.put("error", errorDetails);
