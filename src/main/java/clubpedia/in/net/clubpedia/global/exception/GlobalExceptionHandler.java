@@ -6,8 +6,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Array;
+import java.util.*;
+
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -35,15 +36,31 @@ public class GlobalExceptionHandler {
         return createErrorResponse(ExceptionType.SERVER_ERROR, null);
     }
 
+    // 3. IllegalArgumentException 처리
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return createErrorResponse(ExceptionType.BAD_REQUEST, ex.getMessage());
+    }
+
+
     // 공통 에러 응답 생성 메서드
     private ResponseEntity<Map<String, Object>> createErrorResponse(ExceptionType exceptionType, Object details) {
-        Map<String, Object> errorResponse = new HashMap<>();
-        Map<String, Object> errorDetails = new HashMap<>();
+        Map<String, Object> errorResponse = new LinkedHashMap<>();
+        Map<String, Object> errorDetails = new LinkedHashMap<>();
+
         errorDetails.put("type", exceptionType.name());
         errorDetails.put("message", exceptionType.getMessage());
+
         if (details != null) {
-            errorDetails.put("details", details);
+            if (details instanceof List) {
+                errorDetails.put("details", details);
+            } else {
+                List<String> detailList = new ArrayList<>();
+                detailList.add(details.toString());
+                errorDetails.put("details", detailList);
+            }
         }
+
         errorResponse.put("error", errorDetails);
         return ResponseEntity.status(exceptionType.getStatus()).body(errorResponse);
     }
