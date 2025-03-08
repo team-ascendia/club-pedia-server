@@ -19,4 +19,5 @@ COPY --from=build /app/. .
 EXPOSE 80
 
 # 8️⃣ 실행 명령 (Flyway 마이그레이션 후 애플리케이션 실행)
-CMD ["/bin/sh", "-c", "/app/gradlew flywayMigrate && java -jar /app/build/libs/*.jar"]
+CMD ["/bin/sh", "-c", "/app/gradlew flywayMigrate && exec java -jar $(ls /app/build/libs/*.jar | grep -v plain | head -n 1)"]
+
