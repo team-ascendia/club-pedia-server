@@ -1,29 +1,22 @@
-# 기본 이미지 설정
-FROM amazoncorretto:17 AS build
+# 1️⃣ Gradle이 포함된 JDK 17 이미지 사용하여 빌드
+FROM gradle:8.10-jdk17 AS build
 
-# 작업 디렉토리 설정
 WORKDIR /app
-
-# 프로젝트 소스 코드 복사
 COPY . .
 
-# Gradle을 사용해 빌드
-RUN ./gradlew clean build -x test
+# 2️⃣ Gradle을 사용해 빌드 (Gradle 캐싱을 위해 --no-daemon 옵션 추가)
+RUN gradle build -x test --no-daemon
 
-# Gradle을 사용해 migrate 실행
-RUN ./gradlew flywayMigrate
-
-# 런타임 이미지 설정
+# 3️⃣ 런타임 환경 설정 (Amazon Corretto)
 FROM amazoncorretto:17
 
-# 작업 디렉토리 설정
 WORKDIR /app
 
-# 빌드된 JAR 파일 복사
-COPY --from=build /app/build/libs/*.jar app.jar
+# 4️⃣ 빌드된 JAR 파일 복사
+COPY --from=build /app/. .
 
-# 포트 개방
-EXPOSE 8080
+# 7️⃣ 포트 개방
+EXPOSE 80
 
-# 실행 명령
-CMD ["java", "-jar", "app.jar"]
+# 8️⃣ 실행 명령 (Flyway 마이그레이션 후 애플리케이션 실행)
+CMD ["/bin/sh", "-c", "/app/gradlew flywayMigrate && java -jar /app/build/libs/*.jar"]
