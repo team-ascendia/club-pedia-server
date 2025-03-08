@@ -1,18 +1,24 @@
 package clubpedia.in.net.clubpedia.service;
 
-import clubpedia.in.net.clubpedia.domain.Genre;
+import clubpedia.in.net.clubpedia.dto.GenreResponse;
+import clubpedia.in.net.clubpedia.mapper.GenreMapper;
 import clubpedia.in.net.clubpedia.repository.GenreRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class GenreService {
-    @Autowired
-    GenreRepository genreRepository;
+    private final GenreRepository genreRepository;
+    private final GenreMapper genreMapper = GenreMapper.INSTANCE;
 
-    public List<Genre> getAllGenres() {
-        return genreRepository.findAll();
+    public GenreService(GenreRepository genreRepository) {
+        this.genreRepository = genreRepository;
+    }
+
+    public Page<GenreResponse> getAllGenres(Pageable pageable) {
+        return genreRepository.findAll(pageable)
+                .map(genreMapper::toDto);
     }
 }

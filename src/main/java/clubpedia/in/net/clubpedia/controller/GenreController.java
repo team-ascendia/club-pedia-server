@@ -1,15 +1,20 @@
 package clubpedia.in.net.clubpedia.controller;
 
-import clubpedia.in.net.clubpedia.domain.Genre;
+import clubpedia.in.net.clubpedia.dto.GenreResponse;
 import clubpedia.in.net.clubpedia.service.GenreService;
+import clubpedia.in.net.clubpedia.global.dto.PagedResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @Tag(name="Genre - 장르")
 @RestController
@@ -24,8 +29,12 @@ public class GenreController {
             }
     )
     @GetMapping("/genres")
-    public List<Genre> list() {
-        return genreService.getAllGenres();
+    public PagedResponse<GenreResponse> list(
+            @Positive @RequestParam(defaultValue = "1") int page,
+            @Positive @RequestParam(defaultValue = "100") int pageSize
+    ) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by( "sequence"));
+        Page<GenreResponse> genrePage = genreService.getAllGenres(pageable);
+        return new PagedResponse<>(genrePage);
     }
-
 }

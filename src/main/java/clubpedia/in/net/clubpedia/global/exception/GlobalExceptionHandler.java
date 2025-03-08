@@ -32,8 +32,17 @@ public class GlobalExceptionHandler {
     // 3. 예기치 못한 서버 에러 처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGlobalException(Exception ex) {
-        return createErrorResponse(ExceptionType.SERVER_ERROR, null);
+        HashMap<Integer, ExceptionType> statusMap = new HashMap<>();
+        statusMap.put(400, ExceptionType.BAD_REQUEST);
+        statusMap.put(401, ExceptionType.UNAUTHORIZED);
+        statusMap.put(403, ExceptionType.FORBIDDEN);
+        statusMap.put(500, ExceptionType.SERVER_ERROR);
+
+        Integer statusCode = Integer.parseInt(ex.getMessage().split(" ")[0]);
+        String message = ex.getMessage().split(" ")[2];
+        return createErrorResponse(statusMap.get(statusCode), message);
     }
+
 
     // 3. IllegalArgumentException 처리
     @ExceptionHandler(IllegalArgumentException.class)
