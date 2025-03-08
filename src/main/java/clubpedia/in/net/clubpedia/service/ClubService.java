@@ -1,18 +1,24 @@
 package clubpedia.in.net.clubpedia.service;
 
-import clubpedia.in.net.clubpedia.domain.Club;
+import clubpedia.in.net.clubpedia.dto.ClubResponse;
+import clubpedia.in.net.clubpedia.mapper.ClubMapper;
 import clubpedia.in.net.clubpedia.repository.ClubRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class ClubService {
-    @Autowired
-    ClubRepository clubRepository;
+    private final ClubRepository clubRepository;
+    private final ClubMapper clubMapper = ClubMapper.INSTANCE;
 
-    public List<Club> getAllClubs() {
-        return clubRepository.findAll();
+    public ClubService(ClubRepository clubRepository) {
+        this.clubRepository = clubRepository;
+    }
+
+    public Page<ClubResponse> getAllClubs(Pageable pageable) {
+        return clubRepository.findAll(pageable)
+                .map(clubMapper::toDto);
     }
 }

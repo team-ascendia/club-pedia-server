@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@Tag(name="Member")
+@Tag(name="Member - 멤버")
 @RestController
 @Validated
 public class MemberController {
@@ -26,14 +26,10 @@ public class MemberController {
 
     @Operation(
             operationId = "소셜 계정 활성화",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "성공적으로 요청을 처리했습니다."),
-                    @ApiResponse(responseCode = "500", description = "서버에 예기치 못한 오류가 발생했습니다.")
-            }
+            responses = {}
     )
     @PostMapping("/member/activation")
     public ResponseEntity<MemberResponse> activateMember(@AuthenticationPrincipal Member member, @Valid @RequestBody MemberActivationRequest request) {
-        // 1. Member 정보 변경 & 상태 값 변경
         member = memberService.activateMember(member, request);
         return ResponseEntity.ok(MemberResponse.from(member));
     }
