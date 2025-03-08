@@ -22,7 +22,7 @@ spring:
       hibernate:
         format_sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     show-sql: true
 
 kakao:
@@ -45,4 +45,4 @@ management:
       show-details: always
 
 server:
-  port: 80
+  port: 801
