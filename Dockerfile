@@ -23,7 +23,7 @@ COPY --from=build /app/build/libs/*.jar app.jar
 
 # 포트 개방
 # 8️⃣ 포트 개방
-EXPOSE 8080
+EXPOSE 80
 
 # 실행 명령
 # 9️⃣ 실행 명령
