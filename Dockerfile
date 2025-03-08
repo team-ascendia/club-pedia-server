@@ -18,8 +18,6 @@ FROM amazoncorretto:17
 # 6️⃣ 작업 디렉토리 설정
 WORKDIR /app
 
-# JAR 파일을 컨테이너로 복사
-COPY build/libs/club-pedia-server.jar app.jar
 # 7️⃣ 빌드된 JAR 파일 복사
 COPY --from=build /app/build/libs/*.jar app.jar
 
