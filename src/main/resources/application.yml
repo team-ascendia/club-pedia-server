@@ -18,9 +18,14 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  sql:
-    init:
-      mode: always
+
+#  flyway:
+#    enabled: false
+#    url: jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:clubpedia}
+#    user: ${DB_USER:postgres}
+#    password: ${DB_PASSWORD:abcd1234**}
+#    baseline-on-migrate: true
+#    locations: classpath:db/migration
 
 kakao:
   client-id: ${KAKAO_CLIENT_ID}
@@ -36,8 +41,7 @@ jwt:
 management:
   endpoints:
     web:
-      exposure:
-        include: health
+      base-path: /
   endpoint:
     health:
       show-details: always

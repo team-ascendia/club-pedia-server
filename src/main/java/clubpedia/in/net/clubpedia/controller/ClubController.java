@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Tag(name="Club")
+@Tag(name="Club - 클럽")
 @RestController
 public class ClubController {
     @Autowired
