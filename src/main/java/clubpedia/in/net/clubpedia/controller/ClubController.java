@@ -20,7 +20,7 @@ public class ClubController {
     ClubService clubService;
 
     @Operation(
-            summary = "(미완성)클럽 리스트 조회",
+            operationId = "(미완성)클럽 리스트 조회",
             responses = {
                     @ApiResponse(responseCode = "200", description = "성공적으로 요청을 처리했습니다."),
                     @ApiResponse(responseCode = "500", description = "서버에 예기치 못한 오류가 발생했습니다.")

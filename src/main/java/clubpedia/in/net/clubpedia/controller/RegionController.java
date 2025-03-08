@@ -1,8 +1,8 @@
 package clubpedia.in.net.clubpedia.controller;
 
-import clubpedia.in.net.clubpedia.dto.GenreResponse;
-import clubpedia.in.net.clubpedia.service.GenreService;
+import clubpedia.in.net.clubpedia.dto.RegionResponse;
 import clubpedia.in.net.clubpedia.global.dto.PagedResponse;
+import clubpedia.in.net.clubpedia.service.RegionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,25 +16,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name="Genre - 장르")
+@Tag(name="Region - 지역")
 @RestController
-public class GenreController {
+public class RegionController {
     @Autowired
-    GenreService genreService;
+    RegionService regionService;
 
     @Operation(
-            operationId = "장르 리스트 조회",
+            operationId = "지역 리스트 조회",
             responses = {
                     @ApiResponse(responseCode = "200", description = "성공적으로 요청을 처리했습니다."),
             }
     )
-    @GetMapping("/genres")
-    public PagedResponse<GenreResponse> list(
+    @GetMapping("/regions")
+    public PagedResponse<RegionResponse> list(
             @Positive @RequestParam(defaultValue = "1") int page,
             @Positive @RequestParam(defaultValue = "100") int pageSize
     ) {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by( "sequence"));
-        Page<GenreResponse> genrePage = genreService.getAllGenres(pageable);
-        return new PagedResponse<>(genrePage);
+        Page<RegionResponse> regionPage = regionService.getAllRegions(pageable);
+        return new PagedResponse<>(regionPage);
     }
 }
