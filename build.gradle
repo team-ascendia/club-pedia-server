@@ -2,7 +2,14 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.0'
-//    id 'org.flywaydb.flyway' version '9.16.0'
+    id 'org.flywaydb.flyway' version '9.16.0'
+}
+
+flyway {
+    url = project.hasProperty('flyway.url') ? project.getProperty('flyway.url') : System.getenv('DB_HOST') ? "jdbc:postgresql://" + System.getenv('DB_HOST') + ":5432/" + System.getenv('DB_NAME') : null
+    user = project.hasProperty('flyway.user') ? project.getProperty('flyway.user') : System.getenv('DB_USER')
+    password = project.hasProperty('flyway.password') ? project.getProperty('flyway.password') : System.getenv('DB_PASSWORD')
+    locations = ['classpath:db/migration']
 }
 
 group = 'clubpedia.in.net'
@@ -23,7 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-//    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-core'
 
     // runtime
     runtimeOnly 'com.h2database:h2'

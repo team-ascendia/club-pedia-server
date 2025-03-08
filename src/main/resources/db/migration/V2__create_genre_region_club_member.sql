@@ -3,7 +3,7 @@ CREATE TABLE genre
 (
     id       BIGSERIAL PRIMARY KEY,
     title    VARCHAR(255),
-    sequence INTEGER,
+    sequence INTEGER
 );
 
 -- Region Table 생성
@@ -11,7 +11,7 @@ CREATE TABLE region
 (
     id       BIGSERIAL PRIMARY KEY,
     title    VARCHAR(255),
-    sequence INTEGER,
+    sequence INTEGER
 );
 
 -- Club Table 생성 (외래 키 직접 포함)

@@ -1,24 +1,24 @@
 -- Region 기본 데이터
-INSERT INTO region(title, sequence)
-VALUES ("신사동", 1),
-       ("삼성동", 2),
-       ("청담동", 3),
-       ("압구정동", 4),
-       ("논현동", 5),
-       ("이태원동", 6),
-       ("화양동", 7);
+INSERT INTO region(id, title, sequence)
+VALUES (1, '신사동', 1),
+       (2, '삼성동', 2),
+       (3, '청담동', 3),
+       (4, '압구정동', 4),
+       (5, '논현동', 5),
+       (6, '이태원동', 6),
+       (7, '화양동', 7);
 
 -- Genre 기본 데이터
-INSERT INTO genre(title, sequence)
-VALUES ("EDM", 1),
-       ("힙합", 2),
-       ("테크노", 3),
-       ("하우스", 4),
-       ("K-POP", 5),
-       ("레게톤", 6),
-       ("R&B", 7),
-       ("펑크", 8),
-       ("인디", 9);
+INSERT INTO genre(id, title, sequence)
+VALUES (1, 'EDM', 1),
+       (2, '힙합', 2),
+       (3, '테크노', 3),
+       (4, '하우스', 4),
+       (5, 'K-POP', 5),
+       (6, '레게톤', 6),
+       (7, 'R&B', 7),
+       (8, '펑크', 8),
+       (9, '인디', 9);
 
 -- Club 기본 데이터
 INSERT INTO club (title, thumbnail_image_url, address, price, region_id)
