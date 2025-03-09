@@ -2,7 +2,7 @@ package clubpedia.in.net.clubpedia.global.config;
 
 import clubpedia.in.net.clubpedia.global.filter.JwtAuthenticationFilter;
 import clubpedia.in.net.clubpedia.global.util.JwtUtil;
-import clubpedia.in.net.clubpedia.repository.MemberRepository;
+import clubpedia.in.net.clubpedia.member.repository.MemberRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

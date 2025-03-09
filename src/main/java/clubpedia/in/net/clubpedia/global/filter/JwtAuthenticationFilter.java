@@ -1,8 +1,9 @@
 package clubpedia.in.net.clubpedia.global.filter;
 
-import clubpedia.in.net.clubpedia.domain.Member;
-import clubpedia.in.net.clubpedia.repository.MemberRepository;
+
 import clubpedia.in.net.clubpedia.global.util.JwtUtil;
+import clubpedia.in.net.clubpedia.member.domain.Member;
+import clubpedia.in.net.clubpedia.member.repository.MemberRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
