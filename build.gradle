@@ -32,41 +32,36 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-    implementation 'com.querydsl:querydsl-jpa:5.1.0'
 
     // runtime
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-    // compile
+    // compile only
     compileOnly 'org.projectlombok:lombok'
 
-    // annotation processor
+    // annotation processor (최적화)
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0'
-    annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
-    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
 
-    // test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // QueryDSL
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 }
 
 tasks.named('compileJava') {
-    options.compilerArgs += ["-Aquerydsl.generatedSourcesDir=src/main/generated"]
+    options.compilerArgs += [
+            '-Aquerydsl.generatedSourcesDir=build/generated/sources/annotationProcessor/java/main'
+    ]
 }
 
 sourceSets {
     main {
-        java {
-            srcDirs += "src/main/generated"
-        }
+        java.srcDirs += 'build/generated/sources/annotationProcessor/java/main'
     }
-}
-
-clean {
-    delete file("src/main/generated")
 }
 
 test {
