@@ -23,7 +23,7 @@ public class GenreController {
     GenreService genreService;
 
     @Operation(
-            operationId = "장르 리스트 조회",
+            summary = "장르 리스트 조회",
             responses = {
                     @ApiResponse(responseCode = "200", description = "성공적으로 요청을 처리했습니다."),
             }

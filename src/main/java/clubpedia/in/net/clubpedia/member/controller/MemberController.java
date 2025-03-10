@@ -24,7 +24,7 @@ public class MemberController {
     MemberService memberService;
 
     @Operation(
-            operationId = "소셜 계정 활성화",
+            summary = "소셜 계정 활성화",
             responses = {}
     )
     @PostMapping("/member/activation")

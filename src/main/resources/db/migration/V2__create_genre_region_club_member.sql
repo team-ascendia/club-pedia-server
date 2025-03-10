@@ -20,7 +20,7 @@ CREATE TABLE club
     id                  BIGSERIAL PRIMARY KEY,
     region_id           BIGINT NOT NULL REFERENCES region (id),
     address             VARCHAR(255),
-    price               VARCHAR(255),
+    price               INTEGER,
     thumbnail_image_url VARCHAR(255),
     title               VARCHAR(255)
 );

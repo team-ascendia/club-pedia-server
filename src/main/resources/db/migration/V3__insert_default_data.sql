@@ -1,5 +1,5 @@
 -- Region 기본 데이터
-INSERT INTO region(id, title, sequence)
+INSERT INTO region  (id, title, sequence)
 VALUES (1, '신사동', 1),
        (2, '삼성동', 2),
        (3, '청담동', 3),

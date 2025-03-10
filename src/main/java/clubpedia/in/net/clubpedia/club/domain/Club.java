@@ -28,7 +28,7 @@ public class Club {
     private String address;
 
     @Column(name = "price")
-    private String price;
+    private Integer price;
 
     @ManyToMany
     @JoinTable(

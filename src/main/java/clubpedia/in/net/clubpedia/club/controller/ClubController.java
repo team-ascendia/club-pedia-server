@@ -15,34 +15,36 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name="Club - 지역")
+import java.util.List;
+
+@Tag(name="Club - 클럽")
 @RestController
 public class ClubController {
     @Autowired
     ClubService clubService;
 
     @Operation(
-            operationId = "지역 리스트 조회",
+            summary = "지역 리스트 조회",
             responses = {
                     @ApiResponse(responseCode = "200", description = "성공적으로 요청을 처리했습니다."),
             }
     )
     @GetMapping("/clubs")
     public PagedResponse<ClubResponse> list(
-            @Positive @RequestParam(defaultValue = "1") int page,
-            @Positive @RequestParam(defaultValue = "10") int pageSize,
+            @Positive @RequestParam(defaultValue = "1") Integer page,
+            @Positive @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "popular") String order,
-            @RequestParam(required = false) String genres,
-            @RequestParam(required = false) String regions,
-            @RequestParam(required = false) int priceStart,
-            @RequestParam(required = false) int priceEnd,
-            @RequestParam(required = false) boolean isOpen,
+            @RequestParam(required = false) List<Long> genres,
+            @RequestParam(required = false) List<Long> regions,
+            @RequestParam(required = false) Integer priceStart,
+            @RequestParam(required = false) Integer priceEnd,
+            @RequestParam(required = false) Boolean isOpen,
             @RequestParam String requestTime
     ) {
         // 1. dto 내부 isOpen 보강하기
         // 2. 각 필터값 적용
         Pageable pageable = PageRequest.of(page - 1, pageSize);
-        Page<ClubResponse> clubPage = clubService.getAllClubs(pageable);
+        Page<ClubResponse> clubPage = clubService.getClubsByFilter(pageable, order, genres, regions, priceStart, priceEnd, isOpen, requestTime);
         return new PagedResponse<>(clubPage);
     }
 }
