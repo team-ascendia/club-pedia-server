@@ -18,23 +18,6 @@ import java.time.LocalTime;
 import java.util.List;
 
 
-import com.querydsl.core.Tuple;
-import com.querydsl.core.types.dsl.CaseBuilder;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-import clubpedia.in.net.clubpedia.club.domain.QClub;
-import clubpedia.in.net.clubpedia.club.dto.ClubResponse;
-import clubpedia.in.net.clubpedia.club.mapper.ClubMapper;
-import clubpedia.in.net.clubpedia.genre.domain.QGenre;
-import clubpedia.in.net.clubpedia.club.domain.QClubOperatingTime;
-
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-
 @Repository
 public class ClubCustomRepositoryImpl implements ClubCustomRepository {
 
@@ -72,7 +55,7 @@ public class ClubCustomRepositoryImpl implements ClubCustomRepository {
                                                 .or(operatingTime.closeTime.goe(requestLocalTime)))) // 현재 시간이 Open 이후 또는 Close 이전
                                 .then(true)
 
-                                // 3️⃣ **"전날 운영 시간" 고려 (예: 새벽 1시는 전날 운영)**
+                                // 3️⃣ "전날 운영 시간" 고려 (예: 새벽 1시는 전날 운영)
                                 .when(operatingTime.isNotNull()
                                         .and(operatingTime.dayOfWeek.eq(previousDay)) // 전날 운영 시간 체크
                                         .and(operatingTime.openTime.goe(operatingTime.closeTime))  // 하루 넘어가는 운영 시간
