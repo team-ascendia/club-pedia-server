@@ -30,6 +30,9 @@ public class Club {
     @Column(name = "price")
     private Integer price;
 
+    @Column(name = "summary")
+    private String summary;
+
     @ManyToMany
     @JoinTable(
             name = "club_genre",
@@ -41,4 +44,7 @@ public class Club {
     @ManyToOne
     @JoinColumn(name = "region_id", nullable = false)
     private Region region;
+
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ClubOperatingTime> operatingTimes = new HashSet<>();
 }

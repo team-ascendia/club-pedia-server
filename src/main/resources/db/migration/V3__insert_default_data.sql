@@ -53,3 +53,113 @@ VALUES (1, 1),  -- Octagon -> EDM
        (9, 5),  -- Club Chroma -> K-POP
        (10, 8), -- SKRT Seoul -> 펑크
        (10, 3); -- SKRT Seoul -> 테크노
+
+-- Octagon 운영시간 추가
+INSERT INTO club_operating_time (club_id, day_of_week, open_time, close_time)
+VALUES
+    (1, 'MONDAY', '18:00', '03:00'),
+    (1, 'TUESDAY', '18:00', '03:00'),
+    (1, 'WEDNESDAY', '18:00', '04:00'),
+    (1, 'THURSDAY', '18:00', '04:00'),
+    (1, 'FRIDAY', '18:00', '05:00'),
+    (1, 'SATURDAY', '18:00', '06:00'),
+    (1, 'SUNDAY', '18:00', '02:00');
+
+-- Arena 운영시간 추가
+INSERT INTO club_operating_time (club_id, day_of_week, open_time, close_time)
+VALUES
+    (2, 'MONDAY', '19:00', '02:00'),
+    (2, 'TUESDAY', '19:00', '02:00'),
+    (2, 'WEDNESDAY', '19:00', '03:00'),
+    (2, 'THURSDAY', '19:00', '03:00'),
+    (2, 'FRIDAY', '19:00', '05:00'),
+    (2, 'SATURDAY', '19:00', '06:00'),
+    (2, 'SUNDAY', '19:00', '02:00');
+
+-- Made Itaewon 운영시간 추가
+INSERT INTO club_operating_time (club_id, day_of_week, open_time, close_time)
+VALUES
+    (3, 'MONDAY', '20:00', '02:00'),
+    (3, 'TUESDAY', null, null),
+    (3, 'WEDNESDAY', '20:00', '03:00'),
+    (3, 'THURSDAY', '20:00', '03:00'),
+    (3, 'FRIDAY', '20:00', '05:00'),
+    (3, 'SATURDAY', '20:00', '06:00'),
+    (3, 'SUNDAY', '20:00', '01:00');
+
+-- Club Mass 운영시간 추가
+INSERT INTO club_operating_time (club_id, day_of_week, open_time, close_time)
+VALUES
+    (4, 'MONDAY', null, null),
+    (4, 'TUESDAY', null, null),
+    (4, 'WEDNESDAY', '19:00', '02:00'),
+    (4, 'THURSDAY', '19:00', '03:00'),
+    (4, 'FRIDAY', '19:00', '05:00'),
+    (4, 'SATURDAY', '19:00', '05:00'),
+    (4, 'SUNDAY', '19:00', '01:00');
+
+-- Cakeshop 운영시간 추가
+INSERT INTO club_operating_time (club_id, day_of_week, open_time, close_time)
+VALUES
+    (5, 'MONDAY', null, null),
+    (5, 'TUESDAY', null, null),
+    (5, 'WEDNESDAY', '21:00', '02:00'),
+    (5, 'THURSDAY', '21:00', '03:00'),
+    (5, 'FRIDAY', '21:00', '05:00'),
+    (5, 'SATURDAY', '21:00', '06:00'),
+    (5, 'SUNDAY', '21:00', '02:00');
+
+-- FAUST 운영시간 추가
+INSERT INTO club_operating_time (club_id, day_of_week, open_time, close_time)
+VALUES
+    (6, 'MONDAY', null, null),
+    (6, 'TUESDAY', null, null),
+    (6, 'WEDNESDAY', '20:00', '02:00'),
+    (6, 'THURSDAY', '20:00', '03:00'),
+    (6, 'FRIDAY', '20:00', '05:00'),
+    (6, 'SATURDAY', '20:00', '06:00'),
+    (6, 'SUNDAY', '20:00', '01:00');
+
+-- Boombar 운영시간 추가
+INSERT INTO club_operating_time (club_id, day_of_week, open_time, close_time)
+VALUES
+    (7, 'MONDAY', null, null),
+    (7, 'TUESDAY', '19:00', '02:00'),
+    (7, 'WEDNESDAY', '19:00', '02:00'),
+    (7, 'THURSDAY', '19:00', '03:00'),
+    (7, 'FRIDAY', '19:00', '04:00'),
+    (7, 'SATURDAY', '19:00', '05:00'),
+    (7, 'SUNDAY', '19:00', '01:00');
+
+-- Soap Seoul 운영시간 추가
+INSERT INTO club_operating_time (club_id, day_of_week, open_time, close_time)
+VALUES
+    (8, 'MONDAY', null, null),
+    (8, 'TUESDAY', null, null),
+    (8, 'WEDNESDAY', '20:00', '02:00'),
+    (8, 'THURSDAY', '20:00', '03:00'),
+    (8, 'FRIDAY', '20:00', '05:00'),
+    (8, 'SATURDAY', '20:00', '06:00'),
+    (8, 'SUNDAY', '20:00', '01:00');
+
+-- Club Chroma 운영시간 추가
+INSERT INTO club_operating_time (club_id, day_of_week, open_time, close_time)
+VALUES
+    (9, 'MONDAY', '18:00', '02:00'),
+    (9, 'TUESDAY', '18:00', '02:00'),
+    (9, 'WEDNESDAY', '18:00', '03:00'),
+    (9, 'THURSDAY', '18:00', '04:00'),
+    (9, 'FRIDAY', '18:00', '05:00'),
+    (9, 'SATURDAY', '18:00', '06:00'),
+    (9, 'SUNDAY', '18:00', '02:00');
+
+-- SKRT Seoul 운영시간 추가
+INSERT INTO club_operating_time (club_id, day_of_week, open_time, close_time)
+VALUES
+    (10, 'MONDAY', null, null),
+    (10, 'TUESDAY', null, null),
+    (10, 'WEDNESDAY', '20:00', '02:00'),
+    (10, 'THURSDAY', '20:00', '03:00'),
+    (10, 'FRIDAY', '20:00', '05:00'),
+    (10, 'SATURDAY', '20:00', '06:00'),
+    (10, 'SUNDAY', '20:00', '01:00');

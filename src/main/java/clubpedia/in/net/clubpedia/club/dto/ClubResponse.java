@@ -17,7 +17,7 @@ public class ClubResponse {
     private String address;
     private Integer price;
 //    private Boolean isOpen;
-//    private String summary;
+    private String summary;
     private RegionResponse region;
     private List<GenreResponse> genres;
 }

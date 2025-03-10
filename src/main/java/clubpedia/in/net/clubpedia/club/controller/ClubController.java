@@ -42,7 +42,6 @@ public class ClubController {
             @RequestParam String requestTime
     ) {
         // 1. dto 내부 isOpen 보강하기
-        // 2. 각 필터값 적용
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         Page<ClubResponse> clubPage = clubService.getClubsByFilter(pageable, order, genres, regions, priceStart, priceEnd, isOpen, requestTime);
         return new PagedResponse<>(clubPage);
