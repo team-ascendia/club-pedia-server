@@ -16,7 +16,7 @@ public class ClubResponse {
     private String thumbnailImageUrl;
     private String address;
     private Integer price;
-//    private Boolean isOpen;
+    private Boolean isOpen;
     private String summary;
     private RegionResponse region;
     private List<GenreResponse> genres;

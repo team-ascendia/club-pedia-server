@@ -1,14 +1,20 @@
 package clubpedia.in.net.clubpedia.club.repository;
 
-import clubpedia.in.net.clubpedia.club.domain.Club;
 import clubpedia.in.net.clubpedia.club.domain.QClub;
+import clubpedia.in.net.clubpedia.club.dto.ClubResponse;
+import clubpedia.in.net.clubpedia.club.mapper.ClubMapper;
 import clubpedia.in.net.clubpedia.genre.domain.QGenre;
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import clubpedia.in.net.clubpedia.club.domain.QClubOperatingTime;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -17,46 +23,52 @@ public class ClubCustomRepositoryImpl implements ClubCustomRepository {
     @Autowired
     private JPAQueryFactory queryFactory;
 
-    @Override
-    public List<Club> findClubsByFilter(
-            Pageable pageable,
-            String order,
-            List<Long> genres,
-            List<Long> regions,
-            Integer priceStart,
-            Integer priceEnd,
-            Boolean isOpen,
-            String requestTime) {
-        // TODO : isOpen 값 아직 동적으로 구현되지 않음.
-        // TODO : 정렬 미적용 상태
+    @Autowired
+    private ClubMapper clubMapper;
 
+    @Override
+    public List<ClubResponse> findClubsByFilter(Pageable pageable, String order, List<Long> genres, List<Long> regions, Integer priceStart, Integer priceEnd, Boolean isOpen, LocalDateTime requestTime) {
         QClub club = QClub.club;
         QGenre genre = QGenre.genre;
+        QClubOperatingTime operatingTime = QClubOperatingTime.clubOperatingTime;
 
-        // 기본 쿼리 설정
-        JPAQuery<Club> query = queryFactory.selectFrom(club);
+        DayOfWeek requestDay = requestTime.getDayOfWeek();
+        LocalTime requestLocalTime = requestTime.toLocalTime();
 
-        // 장르 필터값 있을 경우
-        if (genres != null && !genres.isEmpty()) {
-            query.join(club.genres, genre).where(genre.id.in(genres));
-        }
+        // `Club` 리스트를 한 번의 쿼리로 가져오기 (isOpen 포함)
+        List<Tuple> results = queryFactory.select(
+                        club,
+                        new CaseBuilder()
+                                .when(operatingTime.isNotNull()
+                                        .and(operatingTime.openTime.loe(requestLocalTime))
+                                        .and(operatingTime.closeTime.goe(requestLocalTime)))
+                                .then(true)
+                                .otherwise(false)
+                )
+                .from(club)
+                .leftJoin(operatingTime).on(club.id.eq(operatingTime.club.id)
+                        .and(operatingTime.dayOfWeek.eq(requestDay))
+                )
+                // 필터 적용
+                .where(
+                        (genres != null && !genres.isEmpty()) ? club.genres.any().id.in(genres) : null,
+                        (regions != null && !regions.isEmpty()) ? club.region.id.in(regions) : null,
+                        (priceStart != null) ? club.price.goe(priceStart) : null,
+                        (priceEnd != null) ? club.price.loe(priceEnd) : null,
+                        (isOpen != null && isOpen) ? operatingTime.openTime.loe(requestLocalTime)
+                                .and(operatingTime.closeTime.goe(requestLocalTime)) : null
+                )
+                // 페이징 적용 후 fetch() 실행
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
 
-        // 지역 필터값 있을 경우
-        if (regions != null && !regions.isEmpty()) {
-            query.where(club.region.id.in(regions));
-        }
-
-        // 가격 필터값 있을 경우
-        if (priceStart != null) {
-            query.where(club.price.goe(priceStart));
-        }
-        if (priceEnd != null) {
-            query.where(club.price.loe(priceEnd));
-        }
-
-        // 페이징 적용
-        query.offset(pageable.getOffset()).limit(pageable.getPageSize());
-
-        return query.fetch();
+        // Mapper를 이용해 변환
+        return results.stream()
+                .map(tuple -> clubMapper.toResponse(
+                        tuple.get(club),
+                        tuple.get(1, Boolean.class)
+                ))
+                .toList();
     }
 }

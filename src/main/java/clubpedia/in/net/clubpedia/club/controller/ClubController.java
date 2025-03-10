@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Tag(name="Club - 클럽")
@@ -39,9 +41,8 @@ public class ClubController {
             @RequestParam(required = false) Integer priceStart,
             @RequestParam(required = false) Integer priceEnd,
             @RequestParam(required = false) Boolean isOpen,
-            @RequestParam String requestTime
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam LocalDateTime requestTime
     ) {
-        // 1. dto 내부 isOpen 보강하기
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         Page<ClubResponse> clubPage = clubService.getClubsByFilter(pageable, order, genres, regions, priceStart, priceEnd, isOpen, requestTime);
         return new PagedResponse<>(clubPage);

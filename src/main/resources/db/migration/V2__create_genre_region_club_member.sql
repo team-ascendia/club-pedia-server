@@ -53,7 +53,8 @@ CREATE TABLE club_operating_time
 (
     id          BIGSERIAL PRIMARY KEY,
     club_id     BIGINT           NOT NULL,
-    day_of_week day_of_week_enum NOT NULL,
+    day_of_week VARCHAR(255) CHECK (day_of_week IN
+                                    ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY')),
     open_time   TIME,
     close_time  TIME,
     FOREIGN KEY (club_id) REFERENCES club (id)
