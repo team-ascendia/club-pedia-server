@@ -163,3 +163,27 @@ VALUES
     (10, 'FRIDAY', '20:00', '05:00'),
     (10, 'SATURDAY', '20:00', '06:00'),
     (10, 'SUNDAY', '20:00', '01:00');
+
+-- Event 데이터 삽입
+INSERT INTO event (title, thumbnail_image_url, price, summary, start_date, end_date, club_id)
+VALUES
+    ('EDM Night Fever', 'https://example.com/event1.jpg', 30000, '강렬한 EDM 파티', '2024-04-01', '2024-04-02', 1),
+    ('HipHop Night Show', 'https://example.com/event2.jpg', 25000, '힙합 뮤지션들과 함께', '2024-04-03', '2024-04-04', 2),
+    ('Techno Rave', 'https://example.com/event3.jpg', 35000, '테크노 뮤직의 밤', '2024-04-05', '2024-04-06', 3),
+    ('House Music Party', 'https://example.com/event4.jpg', 20000, '하우스 뮤직을 즐기자', '2024-04-07', '2024-04-08', 4),
+    ('K-POP Dance Night', 'https://example.com/event5.jpg', 28000, 'K-POP과 함께 춤을', '2024-04-09', '2024-04-10', 5),
+    ('Reggaeton Fiesta', 'https://example.com/event6.jpg', 27000, '레게톤과 함께하는 핫한 밤', '2024-04-11', '2024-04-12', 6),
+    ('RnB Soul Night', 'https://example.com/event7.jpg', 22000, '소울풀한 R&B의 세계', '2024-04-13', '2024-04-14', 7),
+    ('Funk & Groove Party', 'https://example.com/event8.jpg', 24000, '펑키한 음악과 함께', '2024-04-15', '2024-04-16', 8),
+    ('Indie Music Showcase', 'https://example.com/event9.jpg', 18000, '인디 아티스트 공연', '2024-04-17', '2024-04-18', 9),
+    ('Chroma Electronic Festival', 'https://example.com/event10.jpg', 40000, '최고의 일렉트로닉 음악 축제', '2024-04-19', '2024-04-20', 10),
+    ('Underground HipHop Battle', 'https://example.com/event11.jpg', 23000, '언더그라운드 래퍼 배틀', '2024-04-21', '2024-04-22', 2),
+    ('Sunset Rooftop Party', 'https://example.com/event12.jpg', 28000, '루프탑에서 즐기는 EDM', '2024-04-23', '2024-04-24', 3),
+    ('Latin Night Special', 'https://example.com/event13.jpg', 26000, '라틴 댄스 파티', '2024-04-25', '2024-04-26', 5),
+    ('Boombar HipHop Night', 'https://example.com/event14.jpg', 20000, 'Boombar에서 힙합 밤', '2024-04-27', '2024-04-28', 7),
+    ('Soap Seoul Indie Vibes', 'https://example.com/event15.jpg', 17000, '인디 뮤직과 함께하는 특별한 밤', '2024-04-29', '2024-04-30', 8),
+    ('FAUST House Legends', 'https://example.com/event16.jpg', 31000, '하우스 뮤직의 전설들', '2024-05-01', '2024-05-02', 6),
+    ('Arena EDM Festival', 'https://example.com/event17.jpg', 39000, 'Arena에서 펼쳐지는 EDM 대축제', '2024-05-03', '2024-05-04', 2),
+    ('SKRT Seoul Funky Night', 'https://example.com/event18.jpg', 20000, 'SKRT Seoul에서 즐기는 펑키 나이트', '2024-05-05', '2024-05-06', 10),
+    ('Made Itaewon Latin Party', 'https://example.com/event19.jpg', 27000, 'Made Itaewon에서 라틴 뮤직과 함께', '2024-05-07', '2024-05-08', 3),
+    ('Chroma K-POP Festival', 'https://example.com/event20.jpg', 35000, 'K-POP 스타들과 함께하는 축제', '2024-05-09', '2024-05-10', 9);

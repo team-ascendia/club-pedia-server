@@ -46,13 +46,10 @@ CREATE TABLE club
     summary             VARCHAR(255)
 );
 -- Club Operation Time
-CREATE TYPE day_of_week_enum AS ENUM (
-    'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'
-    );
 CREATE TABLE club_operating_time
 (
     id          BIGSERIAL PRIMARY KEY,
-    club_id     BIGINT           NOT NULL,
+    club_id     BIGINT NOT NULL,
     day_of_week VARCHAR(255) CHECK (day_of_week IN
                                     ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY')),
     open_time   TIME,
@@ -65,5 +62,17 @@ CREATE TABLE club_genre
     club_id  BIGINT NOT NULL REFERENCES club (id),
     genre_id BIGINT NOT NULL REFERENCES genre (id),
     PRIMARY KEY (club_id, genre_id)
+);
+-- Event
+CREATE TABLE event
+(
+    id                  BIGSERIAL PRIMARY KEY,
+    title               VARCHAR(255),
+    thumbnail_image_url VARCHAR(255),
+    price               INTEGER,
+    summary             VARCHAR(255),
+    start_date          date,
+    end_date            date,
+    club_id             BIGINT NOT NULL REFERENCES club (id)
 );
 

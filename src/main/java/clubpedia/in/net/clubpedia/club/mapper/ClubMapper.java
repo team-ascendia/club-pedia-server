@@ -10,14 +10,6 @@ import org.mapstruct.factory.Mappers;
 public interface ClubMapper {
     ClubMapper INSTANCE = Mappers.getMapper(ClubMapper.class);
 
-    @Mapping(source = "club.id", target = "id")
-    @Mapping(source = "club.title", target = "title")
-    @Mapping(source = "club.thumbnailImageUrl", target = "thumbnailImageUrl")
-    @Mapping(source = "club.address", target = "address")
-    @Mapping(source = "club.price", target = "price")
-    @Mapping(source = "isOpen", target = "isOpen") // 동적 값 매핑
-    @Mapping(source = "club.summary", target = "summary")
-    @Mapping(source = "club.region", target = "region")
-    @Mapping(source = "club.genres", target = "genres")
+    @Mapping(source = "isOpen", target = "isOpen")
     ClubResponse toResponse(Club club, Boolean isOpen);
 }

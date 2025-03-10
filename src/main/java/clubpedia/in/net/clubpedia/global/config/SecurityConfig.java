@@ -34,7 +34,8 @@ public class SecurityConfig {
                 "/health",
                 "/genres",
                 "/regions",
-                "/clubs"
+                "/clubs",
+                "/events"
         );
         http
                 .csrf(csrf -> csrf.disable())

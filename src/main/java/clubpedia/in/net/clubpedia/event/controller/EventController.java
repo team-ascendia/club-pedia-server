@@ -1,10 +1,9 @@
-package clubpedia.in.net.clubpedia.club.controller;
+package clubpedia.in.net.clubpedia.event.controller;
 
-import clubpedia.in.net.clubpedia.club.dto.ClubResponse;
+import clubpedia.in.net.clubpedia.event.dto.EventResponse;
+import clubpedia.in.net.clubpedia.event.service.EventService;
 import clubpedia.in.net.clubpedia.global.dto.PagedResponse;
-import clubpedia.in.net.clubpedia.club.service.ClubService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +16,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
-@Tag(name="Club - 클럽")
+@Tag(name="Event - 이벤트")
 @RestController
-public class ClubController {
+public class EventController {
     @Autowired
-    ClubService clubService;
+    EventService eventService;
 
     @Operation(
-            summary = "클럽 리스트 조회",
+            summary = "이벤트 리스트 조회",
             description = "`order` : 아직 상세페이지가 없어 인기순 지표를 반영하지 못했습니다."
     )
-    @GetMapping("/clubs")
-    public PagedResponse<ClubResponse> list(
+    @GetMapping("/events")
+    public PagedResponse<EventResponse> list(
             @Positive @RequestParam(defaultValue = "1") Integer page,
             @Positive @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "popular") String order,
@@ -38,11 +38,13 @@ public class ClubController {
             @RequestParam(required = false) List<Long> regions,
             @RequestParam(required = false) Integer priceStart,
             @RequestParam(required = false) Integer priceEnd,
-            @RequestParam(required = false) Boolean isOpen,
+            @RequestParam(required = false) Date startDate,
+            @RequestParam(required = false) Date endDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam LocalDateTime requestTime
     ) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
-        Page<ClubResponse> clubPage = clubService.getClubsByFilter(pageable, order, genres, regions, priceStart, priceEnd, isOpen, requestTime);
-        return new PagedResponse<>(clubPage);
+        Page<EventResponse> eventPage = eventService.getAllEvents(pageable);
+//        Page<EventResponse> eventPage = eventService.getEventsByFilter(pageable, order, genres, regions, priceStart, priceEnd, startDate, endDate, requestTime);
+        return new PagedResponse<>(eventPage);
     }
 }
