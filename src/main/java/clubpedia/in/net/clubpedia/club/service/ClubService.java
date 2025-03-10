@@ -21,7 +21,6 @@ public class ClubService {
         this.clubRepository = clubRepository;
     }
 
-
     public Page<ClubResponse> getClubsByFilter(Pageable pageable, String order, List<Long> genres, List<Long> regions, Integer priceStart, Integer priceEnd, Boolean isOpen, LocalDateTime requestTime) {
         List<ClubResponse> clubResponses = clubRepository.findClubsByFilter(pageable, order, genres, regions, priceStart, priceEnd, isOpen, requestTime);
         return new PageImpl<>(clubResponses, pageable, clubResponses.size());
