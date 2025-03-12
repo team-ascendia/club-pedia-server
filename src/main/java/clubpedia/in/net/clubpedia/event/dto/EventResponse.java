@@ -1,5 +1,6 @@
 package clubpedia.in.net.clubpedia.event.dto;
 
+import clubpedia.in.net.clubpedia.club.dto.ClubSimpleResponse;
 import clubpedia.in.net.clubpedia.genre.dto.GenreResponse;
 import clubpedia.in.net.clubpedia.region.dto.RegionResponse;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class EventResponse {
     private Date endDate;
     private Integer price;
     private String summary;
+    private ClubSimpleResponse club;
     private RegionResponse region;
     private List<GenreResponse> genres;
 }

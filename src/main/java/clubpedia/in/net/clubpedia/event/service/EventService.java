@@ -1,5 +1,6 @@
 package clubpedia.in.net.clubpedia.event.service;
 
+import clubpedia.in.net.clubpedia.event.domain.Event;
 import clubpedia.in.net.clubpedia.event.dto.EventResponse;
 import clubpedia.in.net.clubpedia.event.mapper.EventMapper;
 import clubpedia.in.net.clubpedia.event.repository.EventRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -22,8 +24,14 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-    public Page<EventResponse> getEventsByFilter(Pageable pageable, String order, List<Long> genres, List<Long> regions, Integer priceStart, Integer priceEnd, Date startDate, Date endDate, LocalDateTime requestTime) {
-        List<EventResponse> eventResponses = eventRepository.findEventsByFilter(pageable, order, genres, regions, priceStart, priceEnd, startDate, endDate, requestTime);
+    public Page<EventResponse> getEventsByFilter(Pageable pageable, String order, List<Long> genres, List<Long> regions, Integer priceStart, Integer priceEnd, Date startDate, Date endDate) {
+        List<Event> events = eventRepository.findEventsByFilter(pageable, order, genres, regions, priceStart, priceEnd, startDate, endDate);
+
+        // Event -> EventResponse 변환
+        List<EventResponse> eventResponses = events.stream()
+                .map(eventMapper::toDto)
+                .collect(Collectors.toList());
+
         return new PageImpl<>(eventResponses, pageable, eventResponses.size());
     }
 

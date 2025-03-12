@@ -38,13 +38,19 @@ public class EventController {
             @RequestParam(required = false) List<Long> regions,
             @RequestParam(required = false) Integer priceStart,
             @RequestParam(required = false) Integer priceEnd,
-            @RequestParam(required = false) Date startDate,
-            @RequestParam(required = false) Date endDate,
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam LocalDateTime requestTime
+            @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
+
     ) {
+        // startDate와 endDate 검증
+        if ((startDate != null && endDate == null) || (startDate == null && endDate != null)) {
+            throw new IllegalArgumentException("startDate와 endDate는 함께 제공되어야 합니다.");
+        }
+
+        // Response 생성
         Pageable pageable = PageRequest.of(page - 1, pageSize);
-        Page<EventResponse> eventPage = eventService.getAllEvents(pageable);
-//        Page<EventResponse> eventPage = eventService.getEventsByFilter(pageable, order, genres, regions, priceStart, priceEnd, startDate, endDate, requestTime);
+        Page<EventResponse> eventPage = eventService.getEventsByFilter(pageable, order, genres, regions, priceStart, priceEnd, startDate, endDate);
+
         return new PagedResponse<>(eventPage);
     }
 }
