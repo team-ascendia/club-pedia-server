@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -38,8 +37,8 @@ public class EventController {
             @RequestParam(required = false) List<Long> regions,
             @RequestParam(required = false) Integer priceStart,
             @RequestParam(required = false) Integer priceEnd,
-            @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
 
     ) {
         // startDate와 endDate 검증

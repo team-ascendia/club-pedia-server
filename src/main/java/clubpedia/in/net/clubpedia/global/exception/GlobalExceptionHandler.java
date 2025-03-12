@@ -1,10 +1,14 @@
 package clubpedia.in.net.clubpedia.global.exception;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -38,8 +42,12 @@ public class GlobalExceptionHandler {
         statusMap.put(403, ExceptionType.FORBIDDEN);
         statusMap.put(500, ExceptionType.SERVER_ERROR);
 
-        Integer statusCode = Integer.parseInt(ex.getMessage().split(" ")[0]);
-        String message = ex.getMessage().split(" ")[2];
+        int statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value(); // 기본값 500
+        String message = ex.getMessage();
+        if (ex instanceof ResponseStatusException) {
+            statusCode = ((ResponseStatusException) ex).getStatusCode().value();
+            message = ((ResponseStatusException) ex).getReason();
+        }
         return createErrorResponse(statusMap.get(statusCode), message);
     }
 
@@ -50,6 +58,11 @@ public class GlobalExceptionHandler {
         return createErrorResponse(ExceptionType.BAD_REQUEST, ex.getMessage());
     }
 
+    // 4. @DateTimeFormat이 잘못된 경우 (예: "yyyy-MM-dd"가 아닌 값 입력)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Map<String, Object>> handleTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+        return createErrorResponse(ExceptionType.BAD_REQUEST, ex.getMessage());
+    }
 
     // 공통 에러 응답 생성 메서드
     private ResponseEntity<Map<String, Object>> createErrorResponse(ExceptionType exceptionType, Object details) {
