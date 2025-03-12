@@ -187,3 +187,32 @@ VALUES
     ('SKRT Seoul Funky Night', 'https://example.com/event18.jpg', 20000, 'SKRT Seoul에서 즐기는 펑키 나이트', '2024-05-05', '2024-05-06', 10),
     ('Made Itaewon Latin Party', 'https://example.com/event19.jpg', 27000, 'Made Itaewon에서 라틴 뮤직과 함께', '2024-05-07', '2024-05-08', 3),
     ('Chroma K-POP Festival', 'https://example.com/event20.jpg', 35000, 'K-POP 스타들과 함께하는 축제', '2024-05-09', '2024-05-10', 9);
+
+-- 기본 Member 추가
+INSERT INTO member (is_location_term_agreed, is_marketing_agreed, is_over_14_agreed,
+                    is_privacy_policy_agreed, is_service_term_agreed, is_signup,
+                    social_type, birthday, email, gender, name, nickname, phone_number,
+                    profile_image_url, refresh_token, social_id)
+VALUES
+    (TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
+     1, '1995-08-15 00:00:00', 'testuser@example.com', 'MALE', '홍길동', '닉네임',
+     '010-1234-5678', 'https://example.com/profile.jpg', NULL, 'TEST_SOCIAL_123');
+
+-- 기본 Post 추가
+INSERT INTO post (title, content, thumbnail_image_url, visit_count, like_count,
+                  comment_count, created_at, modified_at, member_id)
+VALUES
+    ('첫 번째 게시글', '이것은 첫 번째 게시글입니다.', 'https://example.com/post1.jpg', 10, 3, 2,
+     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
+
+    ('두 번째 게시글', '이것은 두 번째 게시글입니다.', 'https://example.com/post2.jpg', 15, 5, 3,
+     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
+
+    ('세 번째 게시글', '이것은 세 번째 게시글입니다.', 'https://example.com/post3.jpg', 20, 8, 5,
+     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
+
+    ('네 번째 게시글', '이것은 네 번째 게시글입니다.', 'https://example.com/post4.jpg', 5, 1, 0,
+     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
+
+    ('다섯 번째 게시글', '이것은 다섯 번째 게시글입니다.', 'https://example.com/post5.jpg', 30, 12, 7,
+     CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);

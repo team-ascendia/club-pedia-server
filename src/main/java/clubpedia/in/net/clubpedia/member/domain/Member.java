@@ -20,6 +20,9 @@ public class Member {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "nickname")
+    private String nickname;
+
     @Column(name = "birthday")
     private Date birthday;
 

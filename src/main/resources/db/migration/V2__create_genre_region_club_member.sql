@@ -13,6 +13,7 @@ CREATE TABLE member
     email                    VARCHAR(255),
     gender                   VARCHAR(255) CHECK (gender IN ('MALE', 'FEMALE', 'UNKNOWN')),
     name                     VARCHAR(255),
+    nickname                     VARCHAR(255),
     phone_number             VARCHAR(255),
     profile_image_url        VARCHAR(255),
     refresh_token            VARCHAR(255),
@@ -75,4 +76,21 @@ CREATE TABLE event
     end_date            date,
     club_id             BIGINT NOT NULL REFERENCES club (id)
 );
+
+-- Post
+CREATE TABLE post
+(
+    id                  BIGSERIAL PRIMARY KEY,
+    title               VARCHAR(255),
+    content             VARCHAR(1000),
+    thumbnail_image_url VARCHAR(255),
+    visit_count         INTEGER   DEFAULT 0,
+    like_count          INTEGER   DEFAULT 0,
+    comment_count       INTEGER   DEFAULT 0,
+    created_at          TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   -- 생성일 자동 저장
+    modified_at         TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   -- 수정일 기본값 설정
+    member_id           BIGINT NOT NULL REFERENCES member (id)
+);
+
+
 
