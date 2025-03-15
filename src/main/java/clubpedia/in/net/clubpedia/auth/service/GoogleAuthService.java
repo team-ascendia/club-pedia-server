@@ -16,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Map;
 import java.util.Optional;
 
-import static clubpedia.in.net.clubpedia.member.service.MemberService.generateNickname;
 
 @Service
 public class GoogleAuthService extends AuthService {
@@ -32,6 +31,7 @@ public class GoogleAuthService extends AuthService {
 
     @Value("${google.client-secret}")
     private String googleClientSecret;
+
     @Autowired
     private MemberService memberService;
 
