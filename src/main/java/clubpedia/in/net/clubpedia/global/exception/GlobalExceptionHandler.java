@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -15,6 +16,14 @@ import java.util.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Map<Integer, ExceptionType> STATUS_MAP = Map.of(
+            400, ExceptionType.BAD_REQUEST,
+            401, ExceptionType.UNAUTHORIZED,
+            403, ExceptionType.FORBIDDEN,
+            500, ExceptionType.SERVER_ERROR
+    );
+
 
     // 1. @Valid 유효성 검증 실패 시 (BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -33,14 +42,10 @@ public class GlobalExceptionHandler {
         return createErrorResponse(ex.getExceptionType(), ex.getDetails());
     }
 
+
     // 3. 예기치 못한 서버 에러 처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGlobalException(Exception ex) {
-        HashMap<Integer, ExceptionType> statusMap = new HashMap<>();
-        statusMap.put(400, ExceptionType.BAD_REQUEST);
-        statusMap.put(401, ExceptionType.UNAUTHORIZED);
-        statusMap.put(403, ExceptionType.FORBIDDEN);
-        statusMap.put(500, ExceptionType.SERVER_ERROR);
 
         int statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value(); // 기본값 500
         String message = ex.getMessage();
@@ -48,7 +53,7 @@ public class GlobalExceptionHandler {
             statusCode = ((ResponseStatusException) ex).getStatusCode().value();
             message = ((ResponseStatusException) ex).getReason();
         }
-        return createErrorResponse(statusMap.get(statusCode), message);
+        return createErrorResponse(STATUS_MAP.get(statusCode), message);
     }
 
 
@@ -61,6 +66,12 @@ public class GlobalExceptionHandler {
     // 4. @DateTimeFormat이 잘못된 경우 (예: "yyyy-MM-dd"가 아닌 값 입력)
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Map<String, Object>> handleTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+        return createErrorResponse(ExceptionType.BAD_REQUEST, ex.getMessage());
+    }
+
+    // 5. Request Parameter 없는 경우
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<Map<String, Object>> handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
         return createErrorResponse(ExceptionType.BAD_REQUEST, ex.getMessage());
     }
 
@@ -88,3 +99,5 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(exceptionType.getStatus()).body(errorResponse);
     }
 }
+
+
