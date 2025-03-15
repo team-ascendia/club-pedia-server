@@ -4,7 +4,6 @@ import clubpedia.in.net.clubpedia.club.dto.ClubResponse;
 import clubpedia.in.net.clubpedia.global.dto.PagedResponse;
 import clubpedia.in.net.clubpedia.club.service.ClubService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static clubpedia.in.net.clubpedia.member.service.MemberService.generateNickname;
 
 @Tag(name="Club - 클럽")
 @RestController
@@ -41,6 +42,7 @@ public class ClubController {
             @RequestParam(required = false) Boolean isOpen,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam LocalDateTime requestTime
     ) {
+        generateNickname();
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         Page<ClubResponse> clubPage = clubService.getClubsByFilter(pageable, order, genres, regions, priceStart, priceEnd, isOpen, requestTime);
         return new PagedResponse<>(clubPage);

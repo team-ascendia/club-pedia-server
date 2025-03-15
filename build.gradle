@@ -34,6 +34,8 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.0'
+    implementation 'net.datafaker:datafaker:2.4.2'
+
     // runtime
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'

@@ -5,6 +5,7 @@ import clubpedia.in.net.clubpedia.global.exception.ExceptionType;
 import clubpedia.in.net.clubpedia.member.domain.Member;
 import clubpedia.in.net.clubpedia.member.domain.SocialType;
 import clubpedia.in.net.clubpedia.member.repository.MemberRepository;
+import clubpedia.in.net.clubpedia.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -18,8 +19,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Map;
 import java.util.Optional;
 
+
 @Service
 public class KakaoAuthService extends AuthService {
+
+    @Autowired
+    MemberService memberService;
 
     @Autowired
     MemberRepository memberRepository;
@@ -72,6 +77,7 @@ public class KakaoAuthService extends AuthService {
             Member member = Member.builder()
                     .socialId(socialId)
                     .email(email)
+                    .nickname(memberService.generateNickname())
                     .socialType(SocialType.KAKAO)
                     .build();
             return memberRepository.save(member);

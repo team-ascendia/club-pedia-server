@@ -4,6 +4,7 @@ import clubpedia.in.net.clubpedia.member.domain.Gender;
 import clubpedia.in.net.clubpedia.member.domain.Member;
 import clubpedia.in.net.clubpedia.member.domain.SocialType;
 import clubpedia.in.net.clubpedia.member.repository.MemberRepository;
+import clubpedia.in.net.clubpedia.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -19,11 +20,15 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
+
 @Service
 public class NaverAuthService extends AuthService {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    MemberService memberService;
 
     @Autowired
     RestTemplate restTemplate;
@@ -86,6 +91,7 @@ public class NaverAuthService extends AuthService {
                     .socialId(socialId)
                     .email(email)
                     .name(name)
+                    .nickname(memberService.generateNickname())
                     .phoneNumber(phoneNumber)
                     .birthday(birthday)
                     .gender(gender)

@@ -3,6 +3,7 @@ package clubpedia.in.net.clubpedia.auth.service;
 import clubpedia.in.net.clubpedia.member.domain.Member;
 import clubpedia.in.net.clubpedia.member.domain.SocialType;
 import clubpedia.in.net.clubpedia.member.repository.MemberRepository;
+import clubpedia.in.net.clubpedia.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -14,6 +15,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 import java.util.Optional;
+
+import static clubpedia.in.net.clubpedia.member.service.MemberService.generateNickname;
 
 @Service
 public class GoogleAuthService extends AuthService {
@@ -29,6 +32,8 @@ public class GoogleAuthService extends AuthService {
 
     @Value("${google.client-secret}")
     private String googleClientSecret;
+    @Autowired
+    private MemberService memberService;
 
     @Override
     public String getSocialAccessToken(String redirectUri, String code) {
@@ -71,6 +76,7 @@ public class GoogleAuthService extends AuthService {
                     .socialId(socialId)
                     .email(email)
                     .name(name)
+                    .nickname(memberService.generateNickname())
                     .socialType(SocialType.GOOGLE)
                     .build();
             return memberRepository.save(member);

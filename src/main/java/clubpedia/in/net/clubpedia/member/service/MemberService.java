@@ -2,8 +2,11 @@ package clubpedia.in.net.clubpedia.member.service;
 import clubpedia.in.net.clubpedia.member.domain.Member;
 import clubpedia.in.net.clubpedia.member.dto.MemberActivationRequest;
 import clubpedia.in.net.clubpedia.member.repository.MemberRepository;
+import net.datafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Locale;
 
 @Service
 public class MemberService {
@@ -24,5 +27,21 @@ public class MemberService {
                 request.getIsMarketingAgreed()
         );
         return memberRepository.save(member);
+    }
+
+    public String generateNickname() {
+        Faker faker = new Faker(new Locale("ko"));
+
+        while (true) {
+            String color = faker.color().name();
+            String city = faker.address().streetName();
+            String nickname = color + city;
+
+            if (memberRepository.existsByNickname(nickname)) {
+                continue;
+            }
+
+            return nickname;
+        }
     }
 }

@@ -22,16 +22,16 @@ VALUES (1, 'EDM', 1),
 
 -- Club 기본 데이터
 INSERT INTO club (title, thumbnail_image_url, address, price, region_id)
-VALUES ('Octagon', 'https://example.com/octagon.jpg', '서울 강남구 신사동 123', '20000', 1),
-       ('Arena', 'https://example.com/arena.jpg', '서울 강남구 삼성동 456', '25000', 2),
-       ('Made Itaewon', 'https://example.com/made.jpg', '서울 용산구 이태원동 789', '30000', 6),
-       ('Club Mass', 'https://example.com/mass.jpg', '서울 강남구 논현동 101', '15000', 5),
-       ('Cakeshop', 'https://example.com/cakeshop.jpg', '서울 용산구 이태원동 222', '20000', 6),
-       ('FAUST', 'https://example.com/faust.jpg', '서울 광진구 화양동 333', '10000', 7),
-       ('Boombar', 'https://example.com/boombar.jpg', '서울 강남구 청담동 444', '18000', 3),
-       ('Soap Seoul', 'https://example.com/soap.jpg', '서울 강남구 압구정동 555', '22000', 4),
-       ('Club Chroma', 'https://example.com/chroma.jpg', '서울 강남구 삼성동 666', '27000', 2),
-       ('SKRT Seoul', 'https://example.com/skrt.jpg', '서울 강남구 청담동 777', '19000', 3);
+VALUES ('Octagon', NULL, '서울 강남구 신사동 123', '20000', 1),
+       ('Arena', NULL, '서울 강남구 삼성동 456', '25000', 2),
+       ('Made Itaewon', NULL, '서울 용산구 이태원동 789', '30000', 6),
+       ('Club Mass', NULL, '서울 강남구 논현동 101', '15000', 5),
+       ('Cakeshop', NULL, '서울 용산구 이태원동 222', '20000', 6),
+       ('FAUST', NULL, '서울 광진구 화양동 333', '10000', 7),
+       ('Boombar', NULL, '서울 강남구 청담동 444', '18000', 3),
+       ('Soap Seoul', NULL, '서울 강남구 압구정동 555', '22000', 4),
+       ('Club Chroma', NULL, '서울 강남구 삼성동 666', '27000', 2),
+       ('SKRT Seoul', NULL, '서울 강남구 청담동 777', '19000', 3);
 
 -- Club과 Genre 연결 (N:M 관계)
 INSERT INTO club_genre (club_id, genre_id)
@@ -167,26 +167,26 @@ VALUES
 -- Event 데이터 삽입
 INSERT INTO event (title, thumbnail_image_url, price, summary, start_date, end_date, club_id)
 VALUES
-    ('EDM Night Fever', 'https://example.com/event1.jpg', 30000, '강렬한 EDM 파티', '2024-04-01', '2024-04-02', 1),
-    ('HipHop Night Show', 'https://example.com/event2.jpg', 25000, '힙합 뮤지션들과 함께', '2024-04-03', '2024-04-04', 2),
-    ('Techno Rave', 'https://example.com/event3.jpg', 35000, '테크노 뮤직의 밤', '2024-04-05', '2024-04-06', 3),
-    ('House Music Party', 'https://example.com/event4.jpg', 20000, '하우스 뮤직을 즐기자', '2024-04-07', '2024-04-08', 4),
-    ('K-POP Dance Night', 'https://example.com/event5.jpg', 28000, 'K-POP과 함께 춤을', '2024-04-09', '2024-04-10', 5),
-    ('Reggaeton Fiesta', 'https://example.com/event6.jpg', 27000, '레게톤과 함께하는 핫한 밤', '2024-04-11', '2024-04-12', 6),
-    ('RnB Soul Night', 'https://example.com/event7.jpg', 22000, '소울풀한 R&B의 세계', '2024-04-13', '2024-04-14', 7),
-    ('Funk & Groove Party', 'https://example.com/event8.jpg', 24000, '펑키한 음악과 함께', '2024-04-15', '2024-04-16', 8),
-    ('Indie Music Showcase', 'https://example.com/event9.jpg', 18000, '인디 아티스트 공연', '2024-04-17', '2024-04-18', 9),
-    ('Chroma Electronic Festival', 'https://example.com/event10.jpg', 40000, '최고의 일렉트로닉 음악 축제', '2024-04-19', '2024-04-20', 10),
-    ('Underground HipHop Battle', 'https://example.com/event11.jpg', 23000, '언더그라운드 래퍼 배틀', '2024-04-21', '2024-04-22', 2),
-    ('Sunset Rooftop Party', 'https://example.com/event12.jpg', 28000, '루프탑에서 즐기는 EDM', '2024-04-23', '2024-04-24', 3),
-    ('Latin Night Special', 'https://example.com/event13.jpg', 26000, '라틴 댄스 파티', '2024-04-25', '2024-04-26', 5),
-    ('Boombar HipHop Night', 'https://example.com/event14.jpg', 20000, 'Boombar에서 힙합 밤', '2024-04-27', '2024-04-28', 7),
-    ('Soap Seoul Indie Vibes', 'https://example.com/event15.jpg', 17000, '인디 뮤직과 함께하는 특별한 밤', '2024-04-29', '2024-04-30', 8),
-    ('FAUST House Legends', 'https://example.com/event16.jpg', 31000, '하우스 뮤직의 전설들', '2024-05-01', '2024-05-02', 6),
-    ('Arena EDM Festival', 'https://example.com/event17.jpg', 39000, 'Arena에서 펼쳐지는 EDM 대축제', '2024-05-03', '2024-05-04', 2),
-    ('SKRT Seoul Funky Night', 'https://example.com/event18.jpg', 20000, 'SKRT Seoul에서 즐기는 펑키 나이트', '2024-05-05', '2024-05-06', 10),
-    ('Made Itaewon Latin Party', 'https://example.com/event19.jpg', 27000, 'Made Itaewon에서 라틴 뮤직과 함께', '2024-05-07', '2024-05-08', 3),
-    ('Chroma K-POP Festival', 'https://example.com/event20.jpg', 35000, 'K-POP 스타들과 함께하는 축제', '2024-05-09', '2024-05-10', 9);
+    ('EDM Night Fever', NULL, 30000, '강렬한 EDM 파티', '2024-04-01', '2024-04-02', 1),
+    ('HipHop Night Show', NULL, 25000, '힙합 뮤지션들과 함께', '2024-04-03', '2024-04-04', 2),
+    ('Techno Rave', NULL, 35000, '테크노 뮤직의 밤', '2024-04-05', '2024-04-06', 3),
+    ('House Music Party', NULL, 20000, '하우스 뮤직을 즐기자', '2024-04-07', '2024-04-08', 4),
+    ('K-POP Dance Night', NULL, 28000, 'K-POP과 함께 춤을', '2024-04-09', '2024-04-10', 5),
+    ('Reggaeton Fiesta', NULL, 27000, '레게톤과 함께하는 핫한 밤', '2024-04-11', '2024-04-12', 6),
+    ('RnB Soul Night', NULL, 22000, '소울풀한 R&B의 세계', '2024-04-13', '2024-04-14', 7),
+    ('Funk & Groove Party', NULL, 24000, '펑키한 음악과 함께', '2024-04-15', '2024-04-16', 8),
+    ('Indie Music Showcase', NULL, 18000, '인디 아티스트 공연', '2024-04-17', '2024-04-18', 9),
+    ('Chroma Electronic Festival', NULL, 40000, '최고의 일렉트로닉 음악 축제', '2024-04-19', '2024-04-20', 10),
+    ('Underground HipHop Battle', NULL, 23000, '언더그라운드 래퍼 배틀', '2024-04-21', '2024-04-22', 2),
+    ('Sunset Rooftop Party', NULL, 28000, '루프탑에서 즐기는 EDM', '2024-04-23', '2024-04-24', 3),
+    ('Latin Night Special', NULL, 26000, '라틴 댄스 파티', '2024-04-25', '2024-04-26', 5),
+    ('Boombar HipHop Night', NULL, 20000, 'Boombar에서 힙합 밤', '2024-04-27', '2024-04-28', 7),
+    ('Soap Seoul Indie Vibes', NULL, 17000, '인디 뮤직과 함께하는 특별한 밤', '2024-04-29', '2024-04-30', 8),
+    ('FAUST House Legends', NULL, 31000, '하우스 뮤직의 전설들', '2024-05-01', '2024-05-02', 6),
+    ('Arena EDM Festival', NULL, 39000, 'Arena에서 펼쳐지는 EDM 대축제', '2024-05-03', '2024-05-04', 2),
+    ('SKRT Seoul Funky Night', NULL, 20000, 'SKRT Seoul에서 즐기는 펑키 나이트', '2024-05-05', '2024-05-06', 10),
+    ('Made Itaewon Latin Party', NULL, 27000, 'Made Itaewon에서 라틴 뮤직과 함께', '2024-05-07', '2024-05-08', 3),
+    ('Chroma K-POP Festival', NULL, 35000, 'K-POP 스타들과 함께하는 축제', '2024-05-09', '2024-05-10', 9);
 
 -- 기본 Member 추가
 INSERT INTO member (is_location_term_agreed, is_marketing_agreed, is_over_14_agreed,
@@ -199,20 +199,21 @@ VALUES
      '010-1234-5678', 'https://example.com/profile.jpg', NULL, 'TEST_SOCIAL_123');
 
 -- 기본 Post 추가
+-- 기본 Post 추가
 INSERT INTO post (title, content, thumbnail_image_url, visit_count, like_count,
                   comment_count, created_at, modified_at, member_id)
 VALUES
-    ('첫 번째 게시글', '이것은 첫 번째 게시글입니다.', 'https://example.com/post1.jpg', 10, 3, 2,
+    ('첫 번째 게시글', '이것은 첫 번째 게시글입니다.', NULL, 10, 3, 2,
      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
 
-    ('두 번째 게시글', '이것은 두 번째 게시글입니다.', 'https://example.com/post2.jpg', 15, 5, 3,
+    ('두 번째 게시글', '이것은 두 번째 게시글입니다.', NULL, 15, 5, 3,
      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
 
-    ('세 번째 게시글', '이것은 세 번째 게시글입니다.', 'https://example.com/post3.jpg', 20, 8, 5,
+    ('세 번째 게시글', '이것은 세 번째 게시글입니다.', NULL, 20, 8, 5,
      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
 
-    ('네 번째 게시글', '이것은 네 번째 게시글입니다.', 'https://example.com/post4.jpg', 5, 1, 0,
+    ('네 번째 게시글', '이것은 네 번째 게시글입니다.', NULL, 5, 1, 0,
      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
 
-    ('다섯 번째 게시글', '이것은 다섯 번째 게시글입니다.', 'https://example.com/post5.jpg', 30, 12, 7,
+    ('다섯 번째 게시글', '이것은 다섯 번째 게시글입니다.', NULL, 30, 12, 7,
      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);
