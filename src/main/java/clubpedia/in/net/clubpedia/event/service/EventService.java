@@ -34,9 +34,4 @@ public class EventService {
 
         return new PageImpl<>(eventResponses, pageable, eventResponses.size());
     }
-
-    public Page<EventResponse> getAllEvents(Pageable pageable) {
-        return eventRepository.findAll(pageable)
-                .map(eventMapper::toDto);
-    }
 }

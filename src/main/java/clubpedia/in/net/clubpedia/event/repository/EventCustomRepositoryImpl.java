@@ -60,6 +60,7 @@ public class EventCustomRepositoryImpl implements EventCustomRepository {
         query = query.leftJoin(event.club, club).fetchJoin()
                 .leftJoin(club.genres, genre).fetchJoin()
                 .leftJoin(club.region).fetchJoin()
+                .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .distinct();
 
         return query.fetch();
