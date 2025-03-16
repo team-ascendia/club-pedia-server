@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static clubpedia.in.net.clubpedia.member.service.MemberService.generateNickname;
-
 @Tag(name="Club - 클럽")
 @RestController
 public class ClubController {
@@ -42,7 +40,6 @@ public class ClubController {
             @RequestParam(required = false) Boolean isOpen,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam LocalDateTime requestTime
     ) {
-        generateNickname();
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         Page<ClubResponse> clubPage = clubService.getClubsByFilter(pageable, order, genres, regions, priceStart, priceEnd, isOpen, requestTime);
         return new PagedResponse<>(clubPage);
